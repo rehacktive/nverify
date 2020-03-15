@@ -1,4 +1,4 @@
-**Search for correlated news**
+**NVerify: Search for correlated news**
 
 The idea: every time I read a news and I'm not sure about the content, I search for sources (that I know) for the same content.
 Then reading the results, I make my own idea about the fact.
@@ -19,4 +19,7 @@ to search for similar articles from well-known sources.
 It's also an API, with curl for example:
 
 `curl http://localhost:8880/verify?url=the_article_url`
+
+An additional param (both for the API and from the frontend) is the accuracy: it defines the amount of keywords, extracted from the
+original article, will be used for the search. The higher, the more accurate, but possibly less (or no) content.
 
