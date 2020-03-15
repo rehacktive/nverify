@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+
+        function fetchResults() {
+            var $results = $('#results');
+            $results.empty();
+            $results.append('</br>fetching results...</br>');
+            var url = document.getElementById('url').value;
+            var accuracy = document.getElementById('accuracy').value;
+            fetch('/verify?url='+url+'&accuracy='+accuracy)
+                .then((resp) => resp.json())
+                .then((data) => {
+                    if (data.Articles) {
+                        data.Articles.forEach(article => {
+                            renderArticle(article)
+                        });
+                    } else {
+                        $results.append('no results found');
+                    }
+                })
+                .catch((err) => {
+                        $results.append("...error fetching the content: "+err)
+                });
+             
+        }
+
+        function renderArticle(article) {
+            var $results = $('#results');
+
+            $results.append('<p>' +
+                '<b>' + article.Title + '</b>: <span><a href="' + article.URL + '">'+article.URL+'</a></span>' +
+                '</p>');    
+        }
+
+
+    </script>
+</head>
+<body>
+<h1>Search Related News:</h1>	
+
+url <input id="url" type="text" name="url" value="" size="100"/> 
+accuracy <input id="accuracy" type="text" name="accuracy" value="3" size="2"/> 
+<input type="submit" onclick="fetchResults()"/> 
+<div id="results"></div>
+
+
+</html>
